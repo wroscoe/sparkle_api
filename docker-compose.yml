@@ -7,7 +7,6 @@ volumes:
 services:
   nginx:
     image: nginx:alpine
-    container_name: nz01
     ports:
       - "8000:8000"
     volumes:
@@ -20,7 +19,6 @@ services:
     build:
       context: .
       dockerfile: compose/django/Dockerfile
-    container_name: dz01
     depends_on:
       - db
     volumes:
@@ -31,20 +29,20 @@ services:
       - redis
     env_file:
       - ./.envs/.django
+    container_name: web1
 
   db:
     build:
       context: .
       dockerfile: compose/postgres/Dockerfile
-    container_name: pz01
     env_file:
       - ./.envs/.postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
 
+
   redis:
     image: redis:alpine
-    container_name: rz01
     ports:
       - "6379:6379"

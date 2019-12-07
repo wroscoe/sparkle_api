@@ -1,11 +1,9 @@
+
 build:
 	docker-compose build
 
 up:
 	docker-compose up -d
-
-up-non-daemon:
-	docker-compose up
 
 start:
 	docker-compose start
@@ -20,7 +18,7 @@ shell-nginx:
 	docker exec -ti nz01 /bin/sh
 
 shell-web:
-	docker exec -ti dz01 /bin/sh
+	docker exec -ti web1 /bin/sh
 
 shell-db:
 	docker exec -ti pz01 /bin/sh
@@ -35,4 +33,4 @@ log-db:
 	docker-compose logs db
 
 collectstatic:
-	docker exec dz01 /bin/sh -c "python manage.py collectstatic --noinput"  
+	docker exec web1 /bin/sh -c "python manage.py collectstatic --noinput"
