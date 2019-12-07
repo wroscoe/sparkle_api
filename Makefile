@@ -1,9 +1,11 @@
+APP_NAMESPACE="sparkle.app=api"
 
-build:
-	docker-compose build
+web:
+		docker-compose up --build -d
 
-up:
-	docker-compose up -d
+migrate_db:
+	docker-compose exec web \
+		/bin/sh -c 'python manage.py migrate'
 
 start:
 	docker-compose start
@@ -18,7 +20,7 @@ shell-nginx:
 	docker exec -ti nz01 /bin/sh
 
 shell-web:
-	docker exec -ti web1 /bin/sh
+	docker exec -ti web /bin/sh
 
 shell-db:
 	docker exec -ti pz01 /bin/sh
@@ -33,4 +35,10 @@ log-db:
 	docker-compose logs db
 
 collectstatic:
-	docker exec web1 /bin/sh -c "python manage.py collectstatic --noinput"
+	docker exec web /bin/sh -c "python manage.py collectstatic --noinput"
+
+stop_all_containers: # Do not change name without changing mworker.service ExecStop in AMI
+	-docker stop $$(docker ps -q --filter label=${APP_NAMESPACE})
+
+clean:
+	-docker system prune -f -a --filter label=${APP_NAMESPACE}

@@ -14,8 +14,11 @@ services:
       - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       - web
+    labels:
+      - "sparkle.app=api"
 
   web:
+    restart: always
     build:
       context: .
       dockerfile: compose/django/Dockerfile
@@ -25,11 +28,11 @@ services:
       - ./src:/src
     expose:
       - "8000"
-    links:
-      - redis
     env_file:
       - ./.envs/.django
-    container_name: web1
+    labels:
+      - "sparkle.app=api"
+    container_name: web
 
   db:
     build:
@@ -40,9 +43,5 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
-
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
+    labels:
+      - "sparkle.app=api"

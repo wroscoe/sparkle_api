@@ -15,7 +15,7 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
     youtube_url = models.CharField(max_length=255)
     question_text = models.TextField()
     order = models.IntegerField()
@@ -28,7 +28,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question,  on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,  related_name='answers', on_delete=models.CASCADE)
 
     content = models.CharField(max_length=1000,
                                blank=False)
@@ -38,3 +38,5 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.content
+
+print('hello1nam')

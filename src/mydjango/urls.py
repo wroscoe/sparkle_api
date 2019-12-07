@@ -20,14 +20,18 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-import quizzing.views
+from django.urls import include, path
+from rest_framework import routers
+from quizzing.views import QuizViewSet, QuestionViewSet
 
-from myapp.views import ShowHelloWorld
 
+router = routers.DefaultRouter()
+router.register(r'quiz', QuizViewSet)
+router.register(r'question', QuestionViewSet)
 
 urlpatterns = [
+    path('', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', ShowHelloWorld.as_view()),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
