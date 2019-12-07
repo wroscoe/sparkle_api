@@ -1,5 +1,9 @@
 ## SparkleSlap API (YEET!)
 
+This is the api server (django + posgres) that is used to 
+* create new quizes
+* act as a bridge to opennode or lightning.gifts to fund quizes and withdraw the rewards
+
 #### Get a dev environment setup
 Get the repo and start the containers.
 
