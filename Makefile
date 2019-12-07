@@ -7,12 +7,6 @@ migrate_db:
 	docker-compose exec web \
 		/bin/sh -c 'python manage.py migrate'
 
-start:
-	docker-compose start
-
-stop:
-	docker-compose stop
-
 restart:
 	docker-compose stop && docker-compose start
 
@@ -37,7 +31,7 @@ log-db:
 collectstatic:
 	docker exec web /bin/sh -c "python manage.py collectstatic --noinput"
 
-stop_all_containers: # Do not change name without changing mworker.service ExecStop in AMI
+stop: # Do not change name without changing mworker.service ExecStop in AMI
 	-docker stop $$(docker ps -q --filter label=${APP_NAMESPACE})
 
 clean:
