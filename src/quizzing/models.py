@@ -1,4 +1,9 @@
 from django.db import models
+import uuid, secrets
+
+def create_secret_id():
+    return secrets.token_urlsafe(24)
+
 
 class Quiz(models.Model):
 
@@ -39,4 +44,18 @@ class Answer(models.Model):
     def __str__(self):
         return self.content
 
-print('hello1nam')
+
+class FundedQuiz(models.Model):
+    """
+    Record which quizzes are funded.
+    """
+    id = models.CharField(primary_key=True, default=create_secret_id, editable=False, max_length=255)
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    complete = models.BooleanField(default=False)
+    percent_correct = models.DecimalField(max_digits=3, decimal_places=0, default=0)
+    amount = models.IntegerField(default=0)
+    redeemed = models.BooleanField(default=False)
+    opennode_withdraw_id = models.CharField(max_length=255, null=True, blank=True)
+    opennode_charge_id = models.CharField(max_length=255, null=True, blank=True)
+    lightning_gift_order_id = models.CharField(max_length=255, null=True, blank=True) # leaving as option to use lightning node
+

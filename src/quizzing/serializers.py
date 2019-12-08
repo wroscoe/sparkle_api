@@ -1,4 +1,4 @@
-from .models import Quiz, Question, Answer
+from .models import Quiz, Question, Answer, FundedQuiz
 from rest_framework import serializers
 
 
@@ -22,3 +22,11 @@ class QuizSerializer(serializers.ModelSerializer):
         model = Quiz
         fields = ['id', 'name', 'description', 'questions']
         depth = 3
+
+
+class FundedQuizSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FundedQuiz
+        fields = ['quiz', 'id', 'complete', 'percent_correct', 'amount',
+                  'lightning_gift_order_id', 'redeemed']

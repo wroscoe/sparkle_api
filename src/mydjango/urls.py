@@ -22,12 +22,12 @@ from django.conf import settings
 
 from django.urls import include, path
 from rest_framework import routers
-from quizzing.views import QuizViewSet, QuestionViewSet
-
+from quizzing.views import QuizViewSet, QuestionViewSet, FundedQuizViewSet
 
 router = routers.DefaultRouter()
 router.register(r'quiz', QuizViewSet)
 router.register(r'question', QuestionViewSet)
+router.register(r'fundedquiz', FundedQuizViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
